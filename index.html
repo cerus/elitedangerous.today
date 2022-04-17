@@ -1,0 +1,64 @@
+<html>
+    <head>
+        <title>Elite: Dangerous Time</title>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Dosis:wght@600&display=swap');
+
+            body {
+                background: rgb(50, 50, 50);
+            }
+
+            .time-content {
+                height: 95%;
+                display: flex;
+                align-items: center;
+                justify-content: center
+            }
+            .time-content p {
+                font-family: 'Dosis', sans-serif;
+                color: white;
+                font-size: 42pt;
+            }
+            .credits {
+                width: 95%;
+                text-align: right;
+                color: gray;
+                font-family: SansSerif;
+                font-size: 16pt;
+            }
+        </style>
+        <script>
+            const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            const DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+
+            window.setInterval(tick, 500);
+            tick();
+
+            function tick() {
+                document.getElementById("time-container").textContent
+                    = formatDate(convertDateToTimeZone(new Date(), "UTC"));
+            }
+
+            function formatDate(date) {
+                return DAYS[date.getDay()] + ", " + MONTHS[date.getMonth()] + " " + date.getDate()
+                    + " " + (date.getFullYear() + 1286) + ", " + String(date.getHours()).padStart(2, "0")
+                    + ":" + String(date.getMinutes()).padStart(2, "0") + ":" + String(date.getSeconds()).padStart(2, "0");
+            }
+
+            // https://stackoverflow.com/a/54127122/10821925
+            function convertDateToTimeZone(date, tzString) {
+                return new Date((typeof date === "string" ? new Date(date) : date).toLocaleString("en-US", {timeZone: tzString}));
+            }
+        </script>
+    </head>
+
+    <body>
+        <div class="time-content">
+            <p id="time-container"></p>
+        </div>
+
+        <div class="credits">
+            <a href="https://github.com/cerus">GitHub</a>
+        </div>
+    </body>
+</html>
